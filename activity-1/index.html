@@ -27,6 +27,43 @@
       flex-direction: column;
       justify-content: flex-end;
     }
+
+        /* Two cards stacked inside one column */
+    .stack .tile { height: auto; }
+
+    /* Image cards */
+    .tile-img {
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.4s ease;
+    }
+    .tile-img::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.75), rgba(0,0,0,0) 60%);
+    }
+    .tile-img > * { position: relative; }
+    .tile-img:hover { transform: scale(1.02); }
+
+    .hero { background-image: url("images/ferrari.jpg"); min-height: 420px; }
+
+    /* Stat cards */
+    .stat {
+      font-size: 3rem;
+      font-weight: 700;
+      line-height: 1;
+      color: #fff;
+    }
+    .stat-label {
+      font-size: 0.95rem;
+      color: #999;
+      margin-bottom: 8px;
+    }
+    .tile p { color: #aaa; margin: 0; }
+
+    .accent { background: #DC0000; border-color: #DC0000; }
+    .accent .stat-label, .accent p { color: rgba(255,255,255,0.85); }
   </style>
 </head>
 <body>
