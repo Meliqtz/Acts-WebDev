@@ -49,7 +49,19 @@
     .hero { background-image: url("images/ferrari.jpg"); min-height: 420px; }
 
         .gallery-1 { background-image: url("images/ferrari-2.jpg"); }
-    
+        .gallery-2 { background-image: url("images/ferrari-3.jpg"); }
+
+    /* Model list */
+    ul.models { list-style: none; padding: 0; margin: 0; }
+    ul.models li {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #2c2c2c;
+      color: #ddd;
+    }
+    ul.models li:last-child { border-bottom: 0; }
+    ul.models span { color: #999; }
         /* Stat cards */
     .stat {
       font-size: 3rem;
@@ -92,6 +104,7 @@
           </div>
         </div>
       </div>
+
               <!-- Row 2: four stats -->
       <div class="col-12 col-sm-6 col-md-3">
         <div class="tile">
@@ -138,6 +151,31 @@
           <div class="h3 m-0">Rosso Corsa</div>
           <p class="mt-2">"Racing red," Italy's traditional racing color</p>
         </div>
+      </div>
+
+      <!-- Row 4: Enzo, models, photo -->
+      <div class="col-12 col-md-4">
+        <div class="tile">
+          <h2 class="h4">Enzo Ferrari</h2>
+          <p>Born in 1898, Enzo was a racing driver before he became a team owner. He started Scuderia Ferrari in 1929 to race Alfa Romeo cars, and built the first car under his own name in 1947. He led the company until his death in 1988.</p>
+        </div>
+      </div>
+      <div class="col-12 col-md-5">
+        <div class="tile">
+          <h2 class="h4 mb-3">Famous models</h2>
+          <ul class="models">
+            <li>125 S <span>1947</span></li>
+            <li>250 GTO <span>1962</span></li>
+            <li>F40 <span>1987</span></li>
+            <li>Enzo <span>2002</span></li>
+            <li>LaFerrari <span>2013</span></li>
+            <li>SF90 Stradale <span>2019</span></li>
+            <li>Purosangue <span>2022</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-12 col-md-3">
+        <div class="tile tile-img gallery-2"></div>
       </div>
 
     </div>
