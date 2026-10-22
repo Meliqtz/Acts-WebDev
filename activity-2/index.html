@@ -1,155 +1,175 @@
 <!doctype html>
 <html lang="en" data-bs-theme="dark">
-  <head>
-    <title>Ferrari Models</title>
-    <!-- tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Bootstrap -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-      crossorigin="anonymous"
-    />
-      
-      <style>
-      body {
-        background: #0d0d0d;
-        color: #fff;
-        font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial,
-          sans-serif;
-      }
+<head>
+  <title>Ferrari Models</title>
+  <!-- tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-      /* Header */
-      .hero {
-        padding: 48px 0 24px;
-      }
-      .hero h1 {
-        font-size: clamp(2.5rem, 6vw, 4rem);
-        font-weight: 800;
-        margin: 8px 0 0;
-      }
-      .hero h1::after {
-        content: "";
-        display: block;
-        width: 80px;
-        height: 4px;
-        background: #dc0000;
-        border-radius: 2px;
-        margin: 16px auto 0;
-      }
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
 
-            /* Car cards */
-      .car-card {
-        background: #1c1c1c;
-        border: 1px solid #333;
-        border-top: 4px solid #dc0000;
-        border-radius: 24px;
-        overflow: hidden;
-        transition: transform 0.3s ease;
-      }
-      .car-card:hover {
-        transform: translateY(-6px);
-      }
-      .car-body {
-        padding: 20px;
-      }
-      .car-name {
-        font-size: 1.4rem;
-        font-weight: 700;
-      }
+  <style>
+    body {
+      background: #0d0d0d;
+      color: #fff;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial,
+        sans-serif;
+    }
 
-            /* Specs (the children) */
-      .spec-list {
-        list-style: none;
-        padding: 0;
-        margin: 16px 0 0;
-      }
-      .spec-list li {
-        padding: 10px 0;
-        border-top: 1px solid #2c2c2c;
-      }
-      .spec-label {
-        display: block;
-        font-size: 0.75rem;
-        color: #999;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-      }
-      .spec-value {
-        font-weight: 600;
-      }
-    </style>
-  </head>
+    /* Header */
+    .hero {
+      padding: 48px 0 24px;
+    }
 
-  <body>
-    <div class="container">
-            <header class="hero text-center">
-        <h1>Ferrari Models</h1>
-      </header>
-      <div class="row g-4 pb-5" id="parent">
-    
-        
-      </div>
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 800;
+      margin: 8px 0 0;
+    }
+
+    .hero h1::after {
+      content: "";
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: #dc0000;
+      border-radius: 2px;
+      margin: 16px auto 0;
+    }
+
+    /* Car cards */
+    .car-card {
+      background: #1c1c1c;
+      border: 1px solid #333;
+      border-top: 4px solid #dc0000;
+      border-radius: 24px;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+        .car-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .car-img {
+      display: block;
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      background: #111;
+    }
+
+    .car-body {
+      padding: 20px;
+    }
+
+    .car-name {
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    /* Specs (the children) */
+    .spec-list {
+      list-style: none;
+      padding: 0;
+      margin: 16px 0 0;
+    }
+
+    .spec-list li {
+      padding: 10px 0;
+      border-top: 1px solid #2c2c2c;
+    }
+
+    .spec-label {
+      display: block;
+      font-size: 0.75rem;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .spec-value {
+      font-weight: 600;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header class="hero text-center">
+      <h1>Ferrari Models</h1>
+    </header>
+    <div class="row g-4 pb-5" id="parent">
+
+
     </div>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-      crossorigin="anonymous"
-    ></script>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
 
-        <script>
-      var models = [
-        {
-          name: "288 GTO",
-          specs: [
-            { label: "Year", value: "1984" },
-            { label: "Engine", value: "2.9L twin-turbo V8" },
-            { label: "Power", value: "about 400 hp" },
-          ],
-        },
-        {
-          name: "F40",
-          specs: [
-            { label: "Year", value: "1987" },
-            { label: "Engine", value: "2.9L twin-turbo V8" },
-            { label: "Power", value: "about 471 hp" },
-          ],
-        },
-        {
-          name: "Enzo",
-          specs: [
-            { label: "Year", value: "2002" },
-            { label: "Engine", value: "6.0L V12" },
-            { label: "Power", value: "about 651 hp" },
-          ],
-        },
-        {
-          name: "SF90 Stradale",
-          specs: [
-            { label: "Year", value: "2019" },
-            { label: "Engine", value: "4.0L twin-turbo V8 + 3 electric motors" },
-            { label: "Power", value: "about 986 hp" },
-          ],
-        },
-      ];
+  <script>
+    var models = [
+      {
+        name: "288 GTO",
+        image: "images/288-gto.jpg",
+        specs: [
+          { label: "Year", value: "1984" },
+          { label: "Engine", value: "2.9L twin-turbo V8" },
+          { label: "Power", value: "about 400 hp" },
+        ],
+      },
+      {
+        name: "F40",
+        image: "images/f40.jpg",
+        specs: [
+          { label: "Year", value: "1987" },
+          { label: "Engine", value: "2.9L twin-turbo V8" },
+          { label: "Power", value: "about 471 hp" },
+        ],
+      },
+      {
+        name: "Enzo",
+        image: "images/enzo.jpg",
+        specs: [
+          { label: "Year", value: "2002" },
+          { label: "Engine", value: "6.0L V12" },
+          { label: "Power", value: "about 651 hp" },
+        ],
+      },
+      {
+        name: "SF90 Stradale",
+        image: "images/sf90.jpg",
+        specs: [
+          { label: "Year", value: "2019" },
+          { label: "Engine", value: "4.0L twin-turbo V8 + 3 electric motors" },
+          { label: "Power", value: "about 986 hp" },
+        ],
+      },
+    ];
 
-      var elParent = document.getElementById("parent");
+    var elParent = document.getElementById("parent");
 
-      for (var i = 0; i < models.length; i++) {
-        var specsHtml = "";
+    for (var i = 0; i < models.length; i++) {
+      var specsHtml = "";
 
-        for (var j = 0; j < models[i].specs.length; j++) {
-          specsHtml += `<li>
+      for (var j = 0; j < models[i].specs.length; j++) {
+        specsHtml += `<li>
               <span class="spec-label">${models[i].specs[j].label}</span>
               <span class="spec-value">${models[i].specs[j].value}</span>
             </li>`;
-        }
+      }
 
-        elParent.innerHTML += `<div class="col-12 col-md-6 col-lg-3">
+      elParent.innerHTML += `<div class="col-12 col-md-6 col-lg-3">
           <div class="car-card h-100">
+            <img
+              src="${models[i].image}"
+              alt="${models[i].name}"
+              class="car-img"
+            />
             <div class="car-body">
               <div class="car-name">${models[i].name}</div>
               <ul class="spec-list">
@@ -158,7 +178,8 @@
             </div>
           </div>
         </div>`;
-      }
-    </script>
-  </body>
+    }
+  </script>
+</body>
+
 </html>
