@@ -60,6 +60,27 @@
         font-size: 1.4rem;
         font-weight: 700;
       }
+
+            /* Specs (the children) */
+      .spec-list {
+        list-style: none;
+        padding: 0;
+        margin: 16px 0 0;
+      }
+      .spec-list li {
+        padding: 10px 0;
+        border-top: 1px solid #2c2c2c;
+      }
+      .spec-label {
+        display: block;
+        font-size: 0.75rem;
+        color: #999;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .spec-value {
+        font-weight: 600;
+      }
     </style>
   </head>
 
@@ -118,10 +139,22 @@
       var elParent = document.getElementById("parent");
 
       for (var i = 0; i < models.length; i++) {
+        var specsHtml = "";
+
+        for (var j = 0; j < models[i].specs.length; j++) {
+          specsHtml += `<li>
+              <span class="spec-label">${models[i].specs[j].label}</span>
+              <span class="spec-value">${models[i].specs[j].value}</span>
+            </li>`;
+        }
+
         elParent.innerHTML += `<div class="col-12 col-md-6 col-lg-3">
           <div class="car-card h-100">
             <div class="car-body">
               <div class="car-name">${models[i].name}</div>
+              <ul class="spec-list">
+                ${specsHtml}
+              </ul>
             </div>
           </div>
         </div>`;
