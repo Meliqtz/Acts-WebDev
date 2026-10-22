@@ -13,10 +13,41 @@
       integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
       crossorigin="anonymous"
     />
+      
+      <style>
+      body {
+        background: #0d0d0d;
+        color: #fff;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial,
+          sans-serif;
+      }
+
+      /* Header */
+      .hero {
+        padding: 48px 0 24px;
+      }
+      .hero h1 {
+        font-size: clamp(2.5rem, 6vw, 4rem);
+        font-weight: 800;
+        margin: 8px 0 0;
+      }
+      .hero h1::after {
+        content: "";
+        display: block;
+        width: 80px;
+        height: 4px;
+        background: #dc0000;
+        border-radius: 2px;
+        margin: 16px auto 0;
+      }
+    </style>
   </head>
 
   <body>
     <div class="container">
+            <header class="hero text-center">
+        <h1>Ferrari Models</h1>
+      </header>
       <div class="row g-4 pb-5" id="parent">
     
         
