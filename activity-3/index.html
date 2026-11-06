@@ -1,762 +1,738 @@
 <!doctype html>
 <html lang="en" data-bs-theme="dark">
-  <head>
-    <title>Valorant Agents and Maps</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <!-- Bootstrap CSS v5.3.8 -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
-      crossorigin="anonymous"
-    />
+<head>
+  <title>Valorant Agents and Maps</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <style>
-      :root {
-        --bg: #0f1923;
-        --panel: #17222d;
-        --line: #26333f;
-        --red: #ff4655;
-        --text: #ece8e1;
-        --muted: #8b978f;
-      }
+  <!-- Bootstrap CSS v5.3.8 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
 
-      body {
-        background: var(--bg);
-        color: var(--text);
-        font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial,
-          sans-serif;
-      }
+  <style>
+    :root {
+      --bg: #0f1923;
+      --panel: #17222d;
+      --line: #26333f;
+      --red: #ff4655;
+      --text: #ece8e1;
+      --muted: #8b978f;
+    }
 
-      /* Top bar */
-      .topbar {
-        background: #0b121a;
-        border-bottom: 1px solid var(--line);
-        padding: 14px 0;
-      }
-      .brand {
-        color: var(--red);
-        font-weight: 800;
-        letter-spacing: 4px;
-      }
-      .brand small {
-        color: var(--text);
-        font-weight: 500;
-        letter-spacing: 2px;
-      }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial,
+        sans-serif;
+    }
 
-      /* Heading and search */
-      .page-title {
-        font-size: 2rem;
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin: 0;
-      }
-      .count {
-        color: var(--muted);
-        margin: 4px 0 0;
-        min-height: 1.5em;
-      }
-      .search-input {
-        background-color: var(--panel);
-        border: 1px solid var(--line);
-        color: var(--text);
-        border-radius: 0;
-        padding: 10px 14px;
-      }
-      .search-input:focus {
-        background-color: var(--panel);
-        color: var(--text);
-        border-color: var(--red);
-        box-shadow: none;
-      }
+    /* Top bar */
+    .topbar {
+      background: #0b121a;
+      border-bottom: 1px solid var(--line);
+      padding: 14px 0;
+    }
 
-      /* Agent cards (listing) */
-      .agent-card {
-        display: block;
-        width: 100%;
-        padding: 0;
-        text-align: left;
-        background: var(--panel);
-        border: 1px solid var(--line);
-        color: inherit;
-        overflow: hidden;
-        transition: transform 0.2s ease, border-color 0.2s ease;
-      }
-      .agent-card:hover {
-        transform: translateY(-4px);
-        border-color: var(--red);
-      }
-      .agent-img {
-        aspect-ratio: 1 / 1;
-        background: var(--panel);
-      }
-      .agent-img img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-      }
-      .agent-info {
-        padding: 12px 14px;
-        border-top: 3px solid var(--red);
-      }
-      .agent-name {
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-      }
-      .agent-role {
-        color: var(--muted);
-        font-size: 0.85rem;
-      }
+    .brand {
+      color: var(--red);
+      font-weight: 800;
+      letter-spacing: 4px;
+    }
 
-      /* Section tabs */
-      .section-tabs {
-        border-bottom: 1px solid var(--line);
-        margin-bottom: 24px;
-      }
-      .section-tabs .nav-link {
-        background: none;
-        border: 0;
-        border-bottom: 3px solid transparent;
-        border-radius: 0;
-        color: var(--muted);
-        font-weight: 700;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-      }
-      .section-tabs .nav-link:hover {
-        color: var(--text);
-      }
-      .section-tabs .nav-link.active {
-        background: none;
-        border-bottom-color: var(--red);
-        color: var(--text);
-      }
+    .brand small {
+      color: var(--text);
+      font-weight: 500;
+      letter-spacing: 2px;
+    }
 
-      /* Maps */
-      .map-img {
-        aspect-ratio: 16 / 9;
-        background: var(--panel);
-      }
-      .map-img img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-      .map-splash {
-        display: block;
-        width: 100%;
-        aspect-ratio: 16 / 9;
-        object-fit: cover;
-      }
-      .callout-title {
-        font-size: 0.8rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin: 12px 0 6px;
-      }
-      .chip {
-        display: inline-block;
-        background: var(--panel);
-        border: 1px solid var(--line);
-        padding: 2px 10px;
-        margin: 0 6px 6px 0;
-        font-size: 0.85rem;
-      }
+    /* Heading and search */
+    .page-title {
+      font-size: 2rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 0;
+    }
 
-      /* Planner */
-      .planner-board {
-        position: relative;
-        width: 100%;
-        max-width: 720px;
-        aspect-ratio: 1 / 1;
-        margin: 0 auto;
-        background: var(--panel);
-        border: 1px solid var(--line);
-        overflow: hidden;
-        cursor: crosshair;
-        user-select: none;
-        touch-action: manipulation;
-      }
-      .planner-board > img {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        pointer-events: none;
-      }
-      .token {
-        position: absolute;
-        width: 44px;
-        height: 44px;
-        transform: translate(-50%, -50%);
-        border: 3px solid;
-        border-radius: 50%;
-        background: var(--panel);
-        overflow: hidden;
-        cursor: grab;
-        touch-action: none;
-      }
-      .token:active {
-        cursor: grabbing;
-      }
-      .token.ally {
-        border-color: #0dcaf0;
-      }
-      .token.enemy {
-        border-color: var(--red);
-      }
-      .token img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        pointer-events: none;
-      }
-      .tray {
-        display: flex;
-        gap: 8px;
-        overflow-x: auto;
-        padding: 12px 0;
-        margin-top: 16px;
-      }
-      .tray-item {
-        flex: 0 0 auto;
-        width: 64px;
-        height: 64px;
-        padding: 0;
-        background: var(--panel);
-        border: 2px solid var(--line);
-      }
-      .tray-item img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-      .tray-item:hover {
-        border-color: var(--text);
-      }
-      .tray-item.selected {
-        border-color: var(--red);
-      }
+    .count {
+      color: var(--muted);
+      margin: 4px 0 0;
+      min-height: 1.5em;
+    }
 
-      .token.ability {
-        width: 38px;
-        height: 38px;
-        padding: 4px;
-        border-radius: 8px;
-      }
-      .token.ability img {
-        object-fit: contain;
-      }
-      .ability-bar {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin-top: 16px;
-      }
-      .ability-btn {
-        position: relative;
-        width: 52px;
-        height: 52px;
-        padding: 6px;
-        background: var(--panel);
-        border: 2px solid var(--line);
-      }
-      .ability-btn img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-      }
-      .ability-btn.agent {
-        padding: 0;
-      }
-      .ability-btn.agent img {
-        object-fit: cover;
-      }
-      .ability-btn:hover {
-        border-color: var(--text);
-      }
-      .ability-btn.selected {
-        border-color: var(--red);
-      }
-      .ability-key {
-        position: absolute;
-        right: -2px;
-        bottom: -2px;
-        padding: 0 4px;
-        background: var(--red);
-        color: #fff;
-        font-size: 0.65rem;
-        font-weight: 700;
-        line-height: 1.3;
-      }
+    .search-input {
+      background-color: var(--panel);
+      border: 1px solid var(--line);
+      color: var(--text);
+      border-radius: 0;
+      padding: 10px 14px;
+    }
 
-      /* Messages */
-      .empty {
-        text-align: center;
-        color: var(--muted);
-        padding: 48px 0;
-      }
+    .search-input:focus {
+      background-color: var(--panel);
+      color: var(--text);
+      border-color: var(--red);
+      box-shadow: none;
+    }
 
-      /* Pagination */
-      .pagination .page-link {
-        background: var(--panel);
-        border-color: var(--line);
-        color: var(--text);
-        border-radius: 0;
-      }
-      .pagination .page-link:hover {
-        border-color: var(--red);
-      }
-      .pagination .page-item.active .page-link {
-        background: var(--red);
-        border-color: var(--red);
-        color: #fff;
-      }
-      .pagination .page-item.disabled .page-link {
-        opacity: 0.4;
-      }
+    /* Agent cards (listing) */
+    .agent-card {
+      display: block;
+      width: 100%;
+      padding: 0;
+      text-align: left;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      color: inherit;
+      overflow: hidden;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
 
-      /* Modal (view) */
-      .modal-content {
-        background: var(--bg);
-        border: 1px solid var(--line);
-        border-radius: 0;
-      }
-      .modal-header,
-      .modal-footer {
-        border-color: var(--line);
-      }
-      .modal-title {
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-      }
-      .portrait-wrap {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 16px;
-        background: var(--panel);
-      }
-      .portrait {
-        max-width: 100%;
-        max-height: 420px;
-        object-fit: contain;
-      }
-      .role-badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: var(--panel);
-        border: 1px solid var(--line);
-        padding: 4px 12px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-      }
-      .role-badge img {
-        width: 20px;
-        height: 20px;
-      }
-      .muted {
-        color: var(--muted);
-      }
-      .section-label {
-        color: var(--red);
-        font-size: 0.8rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin: 20px 0 8px;
-      }
-      .ability-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-      }
-      .ability {
-        display: flex;
-        gap: 12px;
-        padding: 10px 0;
-        border-top: 1px solid var(--line);
-      }
-      .ability-icon {
-        width: 40px;
-        height: 40px;
-        flex-shrink: 0;
-        object-fit: contain;
-        background: var(--panel);
-        padding: 4px;
-      }
-      .ability-name {
-        font-weight: 600;
-      }
-      .ability-key {
-        display: inline-block;
-        min-width: 22px;
-        padding: 0 6px;
-        margin-right: 6px;
-        background: var(--red);
-        color: #fff;
-        font-size: 0.75rem;
-        font-weight: 700;
-        text-align: center;
-      }
-      .ability-desc {
-        color: var(--muted);
-        font-size: 0.85rem;
-        white-space: pre-line;
-      }
+    .agent-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--red);
+    }
 
-      footer {
-        color: var(--muted);
-        font-size: 0.8rem;
-        text-align: center;
-        padding: 32px 0;
-      }
-    </style>
-  </head>
+    .agent-img {
+      aspect-ratio: 1 / 1;
+      background: var(--panel);
+    }
 
-  <body>
-    <header class="topbar">
-      <div class="container">
-        <span class="brand">VALORANT <small>AGENTS &amp; MAPS</small></span>
+    .agent-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .agent-info {
+      padding: 12px 14px;
+      border-top: 3px solid var(--red);
+    }
+
+    .agent-name {
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .agent-role {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    /* Section tabs */
+    .section-tabs {
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 24px;
+    }
+
+    .section-tabs .nav-link {
+      background: none;
+      border: 0;
+      border-bottom: 3px solid transparent;
+      border-radius: 0;
+      color: var(--muted);
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .section-tabs .nav-link:hover {
+      color: var(--text);
+    }
+
+    .section-tabs .nav-link.active {
+      background: none;
+      border-bottom-color: var(--red);
+      color: var(--text);
+    }
+
+    /* Maps */
+    .map-img {
+      aspect-ratio: 16 / 9;
+      background: var(--panel);
+    }
+
+    .map-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .map-splash {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+    }
+
+    .callout-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 12px 0 6px;
+    }
+
+    .chip {
+      display: inline-block;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 2px 10px;
+      margin: 0 6px 6px 0;
+      font-size: 0.85rem;
+    }
+
+    /* Planner */
+    .planner-board {
+      position: relative;
+      width: 100%;
+      max-width: 720px;
+      aspect-ratio: 1 / 1;
+      margin: 0 auto;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      overflow: hidden;
+      cursor: crosshair;
+      user-select: none;
+      touch-action: manipulation;
+    }
+
+    .planner-board>img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      pointer-events: none;
+    }
+
+    .token {
+      position: absolute;
+      width: 44px;
+      height: 44px;
+      transform: translate(-50%, -50%);
+      border: 3px solid;
+      border-radius: 50%;
+      background: var(--panel);
+      overflow: hidden;
+      cursor: grab;
+      touch-action: none;
+    }
+
+    .token:active {
+      cursor: grabbing;
+    }
+
+    .token.ally {
+      border-color: #0dcaf0;
+    }
+
+    .token.enemy {
+      border-color: var(--red);
+    }
+
+    .token img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+    }
+
+    .tray {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 12px 0;
+      margin-top: 16px;
+    }
+
+    .tray-item {
+      flex: 0 0 auto;
+      width: 64px;
+      height: 64px;
+      padding: 0;
+      background: var(--panel);
+      border: 2px solid var(--line);
+    }
+
+    .tray-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .tray-item:hover {
+      border-color: var(--text);
+    }
+
+    .tray-item.selected {
+      border-color: var(--red);
+    }
+
+    .token.ability {
+      width: 38px;
+      height: 38px;
+      padding: 4px;
+      border-radius: 8px;
+    }
+
+    .token.ability img {
+      object-fit: contain;
+    }
+
+    .ability-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .ability-btn {
+      position: relative;
+      width: 52px;
+      height: 52px;
+      padding: 6px;
+      background: var(--panel);
+      border: 2px solid var(--line);
+    }
+
+    .ability-btn img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .ability-btn.agent {
+      padding: 0;
+    }
+
+    .ability-btn.agent img {
+      object-fit: cover;
+    }
+
+    .ability-btn:hover {
+      border-color: var(--text);
+    }
+
+    .ability-btn.selected {
+      border-color: var(--red);
+    }
+
+    .ability-key {
+      position: absolute;
+      right: -2px;
+      bottom: -2px;
+      padding: 0 4px;
+      background: var(--red);
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    /* Messages */
+    .empty {
+      text-align: center;
+      color: var(--muted);
+      padding: 48px 0;
+    }
+
+    /* Pagination */
+    .pagination .page-link {
+      background: var(--panel);
+      border-color: var(--line);
+      color: var(--text);
+      border-radius: 0;
+    }
+
+    .pagination .page-link:hover {
+      border-color: var(--red);
+    }
+
+    .pagination .page-item.active .page-link {
+      background: var(--red);
+      border-color: var(--red);
+      color: #fff;
+    }
+
+    .pagination .page-item.disabled .page-link {
+      opacity: 0.4;
+    }
+
+    /* Modal (view) */
+    .modal-content {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 0;
+    }
+
+    .modal-header,
+    .modal-footer {
+      border-color: var(--line);
+    }
+
+    .modal-title {
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .portrait-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      background: var(--panel);
+    }
+
+    .portrait {
+      max-width: 100%;
+      max-height: 420px;
+      object-fit: contain;
+    }
+
+    .role-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 4px 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .role-badge img {
+      width: 20px;
+      height: 20px;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .section-label {
+      color: var(--red);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 20px 0 8px;
+    }
+
+    .ability-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .ability {
+      display: flex;
+      gap: 12px;
+      padding: 10px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .ability-icon {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+      object-fit: contain;
+      background: var(--panel);
+      padding: 4px;
+    }
+
+    .ability-name {
+      font-weight: 600;
+    }
+
+    .ability-key {
+      display: inline-block;
+      min-width: 22px;
+      padding: 0 6px;
+      margin-right: 6px;
+      background: var(--red);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .ability-desc {
+      color: var(--muted);
+      font-size: 0.85rem;
+      white-space: pre-line;
+    }
+
+    footer {
+      color: var(--muted);
+      font-size: 0.8rem;
+      text-align: center;
+      padding: 32px 0;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="container">
+      <span class="brand">VALORANT <small>AGENTS &amp; MAPS</small></span>
+    </div>
+  </header>
+
+  <main class="container py-4">
+    <ul class="nav nav-tabs section-tabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="agents-tab" data-bs-toggle="tab" data-bs-target="#agentsPane" type="button"
+          role="tab" aria-controls="agentsPane" aria-selected="true">
+          Agents
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="maps-tab" data-bs-toggle="tab" data-bs-target="#mapsPane" type="button" role="tab"
+          aria-controls="mapsPane" aria-selected="false">
+          Maps
+        </button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link" id="planner-tab" data-bs-toggle="tab" data-bs-target="#plannerPane" type="button"
+          role="tab" aria-controls="plannerPane" aria-selected="false">
+          Planner
+        </button>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+      <!-- Agents section -->
+      <div class="tab-pane fade show active" id="agentsPane" role="tabpanel" aria-labelledby="agents-tab" tabindex="0">
+        <div class="row g-3 align-items-end mb-4">
+          <div class="col-12 col-md-7">
+            <h1 class="page-title">Agent Roster</h1>
+            <p class="count" id="count"></p>
+          </div>
+          <div class="col-12 col-md-5">
+            <input id="search" type="search" class="form-control search-input" placeholder="Search by name or role..."
+              autocomplete="off" />
+          </div>
+        </div>
+
+        <!-- Loading, error, and empty messages -->
+        <div id="status"></div>
+
+        <!-- Listing -->
+        <div class="row g-3" id="agent-list"></div>
+
+        <!-- Pagination -->
+        <nav class="mt-4 d-flex justify-content-center" id="pagination" aria-label="Agent pages"></nav>
       </div>
-    </header>
 
-    <main class="container py-4">
-      <ul class="nav nav-tabs section-tabs" role="tablist">
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link active"
-            id="agents-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#agentsPane"
-            type="button"
-            role="tab"
-            aria-controls="agentsPane"
-            aria-selected="true"
-          >
-            Agents
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link"
-            id="maps-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#mapsPane"
-            type="button"
-            role="tab"
-            aria-controls="mapsPane"
-            aria-selected="false"
-          >
-            Maps
-          </button>
-        </li>
-        <li class="nav-item" role="presentation">
-          <button
-            class="nav-link"
-            id="planner-tab"
-            data-bs-toggle="tab"
-            data-bs-target="#plannerPane"
-            type="button"
-            role="tab"
-            aria-controls="plannerPane"
-            aria-selected="false"
-          >
-            Planner
-          </button>
-        </li>
-      </ul>
+      <!-- Maps section -->
+      <div class="tab-pane fade" id="mapsPane" role="tabpanel" aria-labelledby="maps-tab" tabindex="0">
+        <div class="row g-3 align-items-end mb-4">
+          <div class="col-12 col-md-5">
+            <h1 class="page-title">Map Pool</h1>
+            <p class="count" id="mapsCount"></p>
+          </div>
+          <div class="col-7 col-md-4">
+            <input id="mapsSearch" type="search" class="form-control search-input" placeholder="Search maps..."
+              autocomplete="off" />
+          </div>
+          <div class="col-5 col-md-3">
+            <select id="mapsFilter" class="form-select search-input">
+              <option value="standard">Standard maps</option>
+              <option value="all">All maps</option>
+            </select>
+          </div>
+        </div>
 
-      <div class="tab-content">
-        <!-- Agents section -->
-        <div
-          class="tab-pane fade show active"
-          id="agentsPane"
-          role="tabpanel"
-          aria-labelledby="agents-tab"
-          tabindex="0"
-        >
-      <div class="row g-3 align-items-end mb-4">
-        <div class="col-12 col-md-7">
-          <h1 class="page-title">Agent Roster</h1>
-          <p class="count" id="count"></p>
-        </div>
-        <div class="col-12 col-md-5">
-          <input
-            id="search"
-            type="search"
-            class="form-control search-input"
-            placeholder="Search by name or role..."
-            autocomplete="off"
-          />
-        </div>
+        <div id="mapsStatus"></div>
+        <div class="row g-3" id="maps-list"></div>
+        <nav class="mt-4 d-flex justify-content-center" id="mapsPagination" aria-label="Map pages"></nav>
       </div>
 
-      <!-- Loading, error, and empty messages -->
-      <div id="status"></div>
-
-      <!-- Listing -->
-      <div class="row g-3" id="agent-list"></div>
-
-      <!-- Pagination -->
-      <nav
-        class="mt-4 d-flex justify-content-center"
-        id="pagination"
-        aria-label="Agent pages"
-      ></nav>
-        </div>
-
-        <!-- Maps section -->
-        <div
-          class="tab-pane fade"
-          id="mapsPane"
-          role="tabpanel"
-          aria-labelledby="maps-tab"
-          tabindex="0"
-        >
-          <div class="row g-3 align-items-end mb-4">
-            <div class="col-12 col-md-5">
-              <h1 class="page-title">Map Pool</h1>
-              <p class="count" id="mapsCount"></p>
-            </div>
-            <div class="col-7 col-md-4">
-              <input
-                id="mapsSearch"
-                type="search"
-                class="form-control search-input"
-                placeholder="Search maps..."
-                autocomplete="off"
-              />
-            </div>
-            <div class="col-5 col-md-3">
-              <select id="mapsFilter" class="form-select search-input">
-                <option value="standard">Standard maps</option>
-                <option value="all">All maps</option>
-              </select>
-            </div>
+      <!-- Planner section -->
+      <div class="tab-pane fade" id="plannerPane" role="tabpanel" aria-labelledby="planner-tab" tabindex="0">
+        <div class="row g-3 align-items-end mb-3">
+          <div class="col-12 col-lg-5">
+            <h1 class="page-title">Planner</h1>
+            <p class="count" id="plannerHint"></p>
           </div>
-
-          <div id="mapsStatus"></div>
-          <div class="row g-3" id="maps-list"></div>
-          <nav
-            class="mt-4 d-flex justify-content-center"
-            id="mapsPagination"
-            aria-label="Map pages"
-          ></nav>
-        </div>
-
-        <!-- Planner section -->
-        <div
-          class="tab-pane fade"
-          id="plannerPane"
-          role="tabpanel"
-          aria-labelledby="planner-tab"
-          tabindex="0"
-        >
-          <div class="row g-3 align-items-end mb-3">
-            <div class="col-12 col-lg-5">
-              <h1 class="page-title">Planner</h1>
-              <p class="count" id="plannerHint"></p>
-            </div>
-            <div class="col-12 col-md-4 col-lg-3">
-              <select id="plannerMap" class="form-select search-input"></select>
-            </div>
-            <div class="col-12 col-md-8 col-lg-4 d-flex flex-wrap gap-2 justify-content-md-end">
-              <div class="btn-group" role="group" aria-label="Team">
-                <input type="radio" class="btn-check" name="side" id="sideAlly" value="ally" checked />
-                <label class="btn btn-outline-info" for="sideAlly">Ally</label>
-                <input type="radio" class="btn-check" name="side" id="sideEnemy" value="enemy" />
-                <label class="btn btn-outline-danger" for="sideEnemy">Enemy</label>
-              </div>
-              <button type="button" class="btn btn-outline-secondary" id="plannerUndo">Undo</button>
-              <button type="button" class="btn btn-outline-secondary" id="plannerClear">Clear</button>
-            </div>
+          <div class="col-12 col-md-4 col-lg-3">
+            <select id="plannerMap" class="form-select search-input"></select>
           </div>
-
-          <div class="planner-board" id="plannerBoard">
-            <img id="plannerMapImg" alt="" />
-          </div>
-
-          <div class="ability-bar" id="plannerAbilities"></div>
-
-          <div class="tray" id="plannerTray">
-            <span class="muted">Loading agents...</span>
+          <div class="col-12 col-md-8 col-lg-4 d-flex flex-wrap gap-2 justify-content-md-end">
+            <div class="btn-group" role="group" aria-label="Team">
+              <input type="radio" class="btn-check" name="side" id="sideAlly" value="ally" checked />
+              <label class="btn btn-outline-info" for="sideAlly">Ally</label>
+              <input type="radio" class="btn-check" name="side" id="sideEnemy" value="enemy" />
+              <label class="btn btn-outline-danger" for="sideEnemy">Enemy</label>
+            </div>
+            <button type="button" class="btn btn-outline-secondary" id="plannerUndo">Undo</button>
+            <button type="button" class="btn btn-outline-secondary" id="plannerClear">Clear</button>
           </div>
         </div>
-      </div>
-    </main>
 
-    <footer>
-      Unofficial fan project. Data from valorant-api.com. VALORANT is a
-      trademark of Riot Games.
-    </footer>
+        <div class="planner-board" id="plannerBoard">
+          <img id="plannerMapImg" alt="" />
+        </div>
 
-    <!-- View (agent details) -->
-    <div class="modal fade" id="agentModal" tabindex="-1" aria-hidden="true">
-      <div
-        class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable"
-      >
-        <div class="modal-content">
-          <div class="modal-header">
-            <h2 class="modal-title h4" id="modalTitle"></h2>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body" id="modalBody"></div>
+        <div class="ability-bar" id="plannerAbilities"></div>
+
+        <div class="tray" id="plannerTray">
+          <span class="muted">Loading agents...</span>
         </div>
       </div>
     </div>
+  </main>
 
-    <!-- View (map details) -->
-    <div class="modal fade" id="mapModal" tabindex="-1" aria-hidden="true">
-      <div
-        class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable"
-      >
-        <div class="modal-content">
-          <div class="modal-header">
-            <h2 class="modal-title h4" id="mapModalTitle"></h2>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body" id="mapModalBody"></div>
+  <footer>
+    Unofficial fan project. Data from valorant-api.com. VALORANT is a
+    trademark of Riot Games.
+  </footer>
+
+  <!-- View (agent details) -->
+  <div class="modal fade" id="agentModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title h4" id="modalTitle"></h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div class="modal-body" id="modalBody"></div>
       </div>
     </div>
+  </div>
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-      crossorigin="anonymous"
-    ></script>
+  <!-- View (map details) -->
+  <div class="modal fade" id="mapModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title h4" id="mapModalTitle"></h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="mapModalBody"></div>
+      </div>
+    </div>
+  </div>
 
-    <script>
-      const API_URL = "https://valorant-api.com/v1/agents?isPlayableCharacter=true";
-      const PAGE_SIZE = 8;
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
 
-      const SLOT_ORDER = ["Grenade", "Ability1", "Ability2", "Ultimate", "Passive"];
-      const SLOT_KEY = {
-        Grenade: "C",
-        Ability1: "Q",
-        Ability2: "E",
-        Ultimate: "X",
-        Passive: "Passive",
-      };
+  <script>
+    const API_URL = "https://valorant-api.com/v1/agents?isPlayableCharacter=true";
+    const PAGE_SIZE = 8;
 
-      let allAgents = [];
-      let filtered = [];
-      let currentPage = 1;
+    const SLOT_ORDER = ["Grenade", "Ability1", "Ability2", "Ultimate", "Passive"];
+    const SLOT_KEY = {
+      Grenade: "C",
+      Ability1: "Q",
+      Ability2: "E",
+      Ultimate: "X",
+      Passive: "Passive",
+    };
 
-      const elList = document.getElementById("agent-list");
-      const elStatus = document.getElementById("status");
-      const elCount = document.getElementById("count");
-      const elSearch = document.getElementById("search");
-      const elPagination = document.getElementById("pagination");
-      const elModalTitle = document.getElementById("modalTitle");
-      const elModalBody = document.getElementById("modalBody");
-      const agentModal = new bootstrap.Modal(document.getElementById("agentModal"));
+    let allAgents = [];
+    let filtered = [];
+    let currentPage = 1;
 
-      function esc(text) {
-        const div = document.createElement("div");
-        div.textContent = text == null ? "" : text;
-        return div.innerHTML.replace(/"/g, "&quot;");
-      }
+    const elList = document.getElementById("agent-list");
+    const elStatus = document.getElementById("status");
+    const elCount = document.getElementById("count");
+    const elSearch = document.getElementById("search");
+    const elPagination = document.getElementById("pagination");
+    const elModalTitle = document.getElementById("modalTitle");
+    const elModalBody = document.getElementById("modalBody");
+    const agentModal = new bootstrap.Modal(document.getElementById("agentModal"));
 
-      function cleanText(text) {
-        return (text || "").replace(/<[^>]*>/g, "");
-      }
+    function esc(text) {
+      const div = document.createElement("div");
+      div.textContent = text == null ? "" : text;
+      return div.innerHTML.replace(/"/g, "&quot;");
+    }
 
-      async function loadAgents() {
-        elList.innerHTML = "";
-        elPagination.innerHTML = "";
-        elCount.textContent = "";
-        elStatus.innerHTML = `<div class="empty">
+    function cleanText(text) {
+      return (text || "").replace(/<[^>]*>/g, "");
+    }
+
+    async function loadAgents() {
+      elList.innerHTML = "";
+      elPagination.innerHTML = "";
+      elCount.textContent = "";
+      elStatus.innerHTML = `<div class="empty">
             <div class="spinner-border text-danger" role="status"></div>
             <div class="mt-3">Loading agents...</div>
           </div>`;
 
-        try {
-          const res = await fetch(API_URL);
-          if (!res.ok) throw new Error("Request failed (" + res.status + ")");
-          const json = await res.json();
+      try {
+        const res = await fetch(API_URL);
+        if (!res.ok) throw new Error("Request failed (" + res.status + ")");
+        const json = await res.json();
 
-          allAgents = json.data
-            .filter((agent) => agent.isPlayableCharacter)
-            .sort((a, b) => a.displayName.localeCompare(b.displayName));
+        allAgents = json.data
+          .filter((agent) => agent.isPlayableCharacter)
+          .sort((a, b) => a.displayName.localeCompare(b.displayName));
 
-          elStatus.innerHTML = "";
-          applySearch();
-          renderTray();
-        } catch (err) {
-          elStatus.innerHTML = `<div class="alert alert-danger d-flex justify-content-between align-items-center">
+        elStatus.innerHTML = "";
+        applySearch();
+        renderTray();
+      } catch (err) {
+        elStatus.innerHTML = `<div class="alert alert-danger d-flex justify-content-between align-items-center">
               <span>Could not load agents. ${esc(err.message)}</span>
               <button type="button" class="btn btn-sm btn-danger" id="retry">Try again</button>
             </div>`;
-          document.getElementById("retry").addEventListener("click", loadAgents);
-        }
+        document.getElementById("retry").addEventListener("click", loadAgents);
+      }
+    }
+
+    function applySearch() {
+      const query = elSearch.value.trim().toLowerCase();
+
+      filtered = allAgents.filter((agent) => {
+        const name = agent.displayName.toLowerCase();
+        const role = agent.role ? agent.role.displayName.toLowerCase() : "";
+        return name.includes(query) || role.includes(query);
+      });
+
+      currentPage = 1;
+      render();
+    }
+
+    function render() {
+      const total = filtered.length;
+      const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
+      if (currentPage > pages) currentPage = pages;
+
+      if (total === 0) {
+        elList.innerHTML = "";
+        elPagination.innerHTML = "";
+        elCount.textContent = "0 agents";
+        elStatus.innerHTML = `<p class="empty">No agents match "${esc(elSearch.value.trim())}".</p>`;
+        return;
       }
 
-      function applySearch() {
-        const query = elSearch.value.trim().toLowerCase();
+      const start = (currentPage - 1) * PAGE_SIZE;
+      const pageItems = filtered.slice(start, start + PAGE_SIZE);
 
-        filtered = allAgents.filter((agent) => {
-          const name = agent.displayName.toLowerCase();
-          const role = agent.role ? agent.role.displayName.toLowerCase() : "";
-          return name.includes(query) || role.includes(query);
-        });
+      elStatus.innerHTML = "";
+      elCount.textContent = `Showing ${start + 1}-${start + pageItems.length} of ${total} agents`;
+      elList.innerHTML = pageItems.map(cardHtml).join("");
+      renderPagination(pages);
+    }
 
-        currentPage = 1;
-        render();
-      }
+    function cardHtml(agent) {
+      const colors = agent.backgroundGradientColors;
+      const bg = colors
+        ? `background: linear-gradient(160deg, #${colors[0].slice(0, 6)}, #0f1923);`
+        : "";
+      const role = agent.role ? agent.role.displayName : "Agent";
 
-      function render() {
-        const total = filtered.length;
-        const pages = Math.max(1, Math.ceil(total / PAGE_SIZE));
-        if (currentPage > pages) currentPage = pages;
-
-        if (total === 0) {
-          elList.innerHTML = "";
-          elPagination.innerHTML = "";
-          elCount.textContent = "0 agents";
-          elStatus.innerHTML = `<p class="empty">No agents match "${esc(elSearch.value.trim())}".</p>`;
-          return;
-        }
-
-        const start = (currentPage - 1) * PAGE_SIZE;
-        const pageItems = filtered.slice(start, start + PAGE_SIZE);
-
-        elStatus.innerHTML = "";
-        elCount.textContent = `Showing ${start + 1}-${start + pageItems.length} of ${total} agents`;
-        elList.innerHTML = pageItems.map(cardHtml).join("");
-        renderPagination(pages);
-      }
-
-      function cardHtml(agent) {
-        const colors = agent.backgroundGradientColors;
-        const bg = colors
-          ? `background: linear-gradient(160deg, #${colors[0].slice(0, 6)}, #0f1923);`
-          : "";
-        const role = agent.role ? agent.role.displayName : "Agent";
-
-        return `<div class="col-6 col-md-4 col-lg-3">
+      return `<div class="col-6 col-md-4 col-lg-3">
           <button type="button" class="agent-card" data-uuid="${agent.uuid}">
             <div class="agent-img" style="${bg}">
               <img src="${agent.displayIcon}" alt="${esc(agent.displayName)}" loading="lazy" />
@@ -767,60 +743,60 @@
             </div>
           </button>
         </div>`;
+    }
+
+    function paginationHtml(current, pages) {
+      if (pages <= 1) return "";
+
+      let html = '<ul class="pagination mb-0">';
+      html += pageItem(current - 1, "Prev", current === 1, false);
+      for (let p = 1; p <= pages; p++) {
+        html += pageItem(p, p, false, p === current);
       }
+      html += pageItem(current + 1, "Next", current === pages, false);
+      html += "</ul>";
+      return html;
+    }
 
-      function paginationHtml(current, pages) {
-        if (pages <= 1) return "";
+    function renderPagination(pages) {
+      elPagination.innerHTML = paginationHtml(currentPage, pages);
+    }
 
-        let html = '<ul class="pagination mb-0">';
-        html += pageItem(current - 1, "Prev", current === 1, false);
-        for (let p = 1; p <= pages; p++) {
-          html += pageItem(p, p, false, p === current);
-        }
-        html += pageItem(current + 1, "Next", current === pages, false);
-        html += "</ul>";
-        return html;
-      }
-
-      function renderPagination(pages) {
-        elPagination.innerHTML = paginationHtml(currentPage, pages);
-      }
-
-      function pageItem(page, label, disabled, active) {
-        return `<li class="page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}">
+    function pageItem(page, label, disabled, active) {
+      return `<li class="page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}">
           <button type="button" class="page-link" data-page="${page}" ${disabled ? "disabled" : ""}>${label}</button>
         </li>`;
-      }
+    }
 
-      function openAgent(uuid) {
-        const agent = allAgents.find((a) => a.uuid === uuid);
-        if (!agent) return;
+    function openAgent(uuid) {
+      const agent = allAgents.find((a) => a.uuid === uuid);
+      if (!agent) return;
 
-        const colors = agent.backgroundGradientColors;
-        const bg = colors
-          ? `background: linear-gradient(160deg, #${colors[0].slice(0, 6)}, #0f1923);`
-          : "";
+      const colors = agent.backgroundGradientColors;
+      const bg = colors
+        ? `background: linear-gradient(160deg, #${colors[0].slice(0, 6)}, #0f1923);`
+        : "";
 
-        const portrait = agent.fullPortrait
-          ? `<img class="portrait" src="${agent.fullPortrait}" alt="${esc(agent.displayName)}" />`
-          : "";
+      const portrait = agent.fullPortrait
+        ? `<img class="portrait" src="${agent.fullPortrait}" alt="${esc(agent.displayName)}" />`
+        : "";
 
-        const role = agent.role
-          ? `<div class="role-badge">
+      const role = agent.role
+        ? `<div class="role-badge">
                <img src="${agent.role.displayIcon}" alt="" />
                ${esc(agent.role.displayName)}
              </div>
              <p class="muted mt-2">${esc(agent.role.description)}</p>`
-          : "";
+        : "";
 
-        const abilities = (agent.abilities || [])
-          .slice()
-          .sort((a, b) => SLOT_ORDER.indexOf(a.slot) - SLOT_ORDER.indexOf(b.slot))
-          .map((ab) => {
-            const icon = ab.displayIcon
-              ? `<img class="ability-icon" src="${ab.displayIcon}" alt="" />`
-              : `<div class="ability-icon"></div>`;
-            return `<li class="ability">
+      const abilities = (agent.abilities || [])
+        .slice()
+        .sort((a, b) => SLOT_ORDER.indexOf(a.slot) - SLOT_ORDER.indexOf(b.slot))
+        .map((ab) => {
+          const icon = ab.displayIcon
+            ? `<img class="ability-icon" src="${ab.displayIcon}" alt="" />`
+            : `<div class="ability-icon"></div>`;
+          return `<li class="ability">
               ${icon}
               <div>
                 <div class="ability-name">
@@ -829,11 +805,11 @@
                 <div class="ability-desc">${esc(cleanText(ab.description))}</div>
               </div>
             </li>`;
-          })
-          .join("");
+        })
+        .join("");
 
-        elModalTitle.textContent = agent.displayName;
-        elModalBody.innerHTML = `<div class="row g-4">
+      elModalTitle.textContent = agent.displayName;
+      elModalBody.innerHTML = `<div class="row g-4">
             <div class="col-12 col-md-5">
               <div class="portrait-wrap" style="${bg}">${portrait}</div>
             </div>
@@ -846,104 +822,104 @@
             </div>
           </div>`;
 
-        agentModal.show();
-      }
- const MAPS_URL = "https://valorant-api.com/v1/maps";
-      const MAP_PAGE_SIZE = 6;
-      const REGION_ORDER = ["A", "B", "C", "Mid", "Attacker Side", "Defender Side"];
+      agentModal.show();
+    }
+    const MAPS_URL = "https://valorant-api.com/v1/maps";
+    const MAP_PAGE_SIZE = 6;
+    const REGION_ORDER = ["A", "B", "C", "Mid", "Attacker Side", "Defender Side"];
 
-      let allMaps = [];
-      let mapsFiltered = [];
-      let mapPage = 1;
+    let allMaps = [];
+    let mapsFiltered = [];
+    let mapPage = 1;
 
-      const elMapsList = document.getElementById("maps-list");
-      const elMapsStatus = document.getElementById("mapsStatus");
-      const elMapsCount = document.getElementById("mapsCount");
-      const elMapsSearch = document.getElementById("mapsSearch");
-      const elMapsFilter = document.getElementById("mapsFilter");
-      const elMapsPagination = document.getElementById("mapsPagination");
-      const elMapModalTitle = document.getElementById("mapModalTitle");
-      const elMapModalBody = document.getElementById("mapModalBody");
-      const mapModal = new bootstrap.Modal(document.getElementById("mapModal"));
+    const elMapsList = document.getElementById("maps-list");
+    const elMapsStatus = document.getElementById("mapsStatus");
+    const elMapsCount = document.getElementById("mapsCount");
+    const elMapsSearch = document.getElementById("mapsSearch");
+    const elMapsFilter = document.getElementById("mapsFilter");
+    const elMapsPagination = document.getElementById("mapsPagination");
+    const elMapModalTitle = document.getElementById("mapModalTitle");
+    const elMapModalBody = document.getElementById("mapModalBody");
+    const mapModal = new bootstrap.Modal(document.getElementById("mapModal"));
 
-      async function loadMaps() {
-        elMapsList.innerHTML = "";
-        elMapsPagination.innerHTML = "";
-        elMapsCount.textContent = "";
-        elMapsStatus.innerHTML = `<div class="empty">
+    async function loadMaps() {
+      elMapsList.innerHTML = "";
+      elMapsPagination.innerHTML = "";
+      elMapsCount.textContent = "";
+      elMapsStatus.innerHTML = `<div class="empty">
             <div class="spinner-border text-danger" role="status"></div>
             <div class="mt-3">Loading maps...</div>
           </div>`;
 
-        try {
-          const res = await fetch(MAPS_URL);
-          if (!res.ok) throw new Error("Request failed (" + res.status + ")");
-          const json = await res.json();
+      try {
+        const res = await fetch(MAPS_URL);
+        if (!res.ok) throw new Error("Request failed (" + res.status + ")");
+        const json = await res.json();
 
-          // The API lists "The Range" twice, so keep one of each name
-          const seen = new Set();
-          allMaps = json.data
-            .filter((m) => {
-              if (seen.has(m.displayName)) return false;
-              seen.add(m.displayName);
-              return true;
-            })
-            .sort((a, b) => a.displayName.localeCompare(b.displayName));
+        // The API lists "The Range" twice, so keep one of each name
+        const seen = new Set();
+        allMaps = json.data
+          .filter((m) => {
+            if (seen.has(m.displayName)) return false;
+            seen.add(m.displayName);
+            return true;
+          })
+          .sort((a, b) => a.displayName.localeCompare(b.displayName));
 
-          elMapsStatus.innerHTML = "";
-          applyMapFilters();
-          fillPlannerMaps();
-        } catch (err) {
-          elMapsStatus.innerHTML = `<div class="alert alert-danger d-flex justify-content-between align-items-center">
+        elMapsStatus.innerHTML = "";
+        applyMapFilters();
+        fillPlannerMaps();
+      } catch (err) {
+        elMapsStatus.innerHTML = `<div class="alert alert-danger d-flex justify-content-between align-items-center">
               <span>Could not load maps. ${esc(err.message)}</span>
               <button type="button" class="btn btn-sm btn-danger" id="retryMaps">Try again</button>
             </div>`;
-          document.getElementById("retryMaps").addEventListener("click", loadMaps);
-        }
+        document.getElementById("retryMaps").addEventListener("click", loadMaps);
+      }
+    }
+
+    // Search + "Standard maps" filter (standard = maps with A/B sites)
+    function applyMapFilters() {
+      const query = elMapsSearch.value.trim().toLowerCase();
+      const standardOnly = elMapsFilter.value === "standard";
+
+      mapsFiltered = allMaps.filter((m) => {
+        if (standardOnly && !m.tacticalDescription) return false;
+        return m.displayName.toLowerCase().includes(query);
+      });
+
+      mapPage = 1;
+      renderMaps();
+    }
+
+    function renderMaps() {
+      const total = mapsFiltered.length;
+      const pages = Math.max(1, Math.ceil(total / MAP_PAGE_SIZE));
+      if (mapPage > pages) mapPage = pages;
+
+      if (total === 0) {
+        elMapsList.innerHTML = "";
+        elMapsPagination.innerHTML = "";
+        elMapsCount.textContent = "0 maps";
+        elMapsStatus.innerHTML = `<p class="empty">No maps match "${esc(elMapsSearch.value.trim())}".</p>`;
+        return;
       }
 
-      // Search + "Standard maps" filter (standard = maps with A/B sites)
-      function applyMapFilters() {
-        const query = elMapsSearch.value.trim().toLowerCase();
-        const standardOnly = elMapsFilter.value === "standard";
+      const start = (mapPage - 1) * MAP_PAGE_SIZE;
+      const pageItems = mapsFiltered.slice(start, start + MAP_PAGE_SIZE);
 
-        mapsFiltered = allMaps.filter((m) => {
-          if (standardOnly && !m.tacticalDescription) return false;
-          return m.displayName.toLowerCase().includes(query);
-        });
+      elMapsStatus.innerHTML = "";
+      elMapsCount.textContent = `Showing ${start + 1}-${start + pageItems.length} of ${total} maps`;
+      elMapsList.innerHTML = pageItems.map(mapCardHtml).join("");
+      elMapsPagination.innerHTML = paginationHtml(mapPage, pages);
+    }
 
-        mapPage = 1;
-        renderMaps();
-      }
+    function mapCardHtml(m) {
+      const image = m.splash
+        ? `<img src="${m.splash}" alt="${esc(m.displayName)}" loading="lazy" />`
+        : "";
 
-      function renderMaps() {
-        const total = mapsFiltered.length;
-        const pages = Math.max(1, Math.ceil(total / MAP_PAGE_SIZE));
-        if (mapPage > pages) mapPage = pages;
-
-        if (total === 0) {
-          elMapsList.innerHTML = "";
-          elMapsPagination.innerHTML = "";
-          elMapsCount.textContent = "0 maps";
-          elMapsStatus.innerHTML = `<p class="empty">No maps match "${esc(elMapsSearch.value.trim())}".</p>`;
-          return;
-        }
-
-        const start = (mapPage - 1) * MAP_PAGE_SIZE;
-        const pageItems = mapsFiltered.slice(start, start + MAP_PAGE_SIZE);
-
-        elMapsStatus.innerHTML = "";
-        elMapsCount.textContent = `Showing ${start + 1}-${start + pageItems.length} of ${total} maps`;
-        elMapsList.innerHTML = pageItems.map(mapCardHtml).join("");
-        elMapsPagination.innerHTML = paginationHtml(mapPage, pages);
-      }
-
-      function mapCardHtml(m) {
-        const image = m.splash
-          ? `<img src="${m.splash}" alt="${esc(m.displayName)}" loading="lazy" />`
-          : "";
-
-        return `<div class="col-12 col-sm-6 col-lg-4">
+      return `<div class="col-12 col-sm-6 col-lg-4">
           <button type="button" class="agent-card" data-uuid="${m.uuid}">
             <div class="map-img">${image}</div>
             <div class="agent-info">
@@ -952,49 +928,49 @@
             </div>
           </button>
         </div>`;
-      }
+    }
 
-      function openMap(uuid) {
-        const m = allMaps.find((x) => x.uuid === uuid);
-        if (!m) return;
+    function openMap(uuid) {
+      const m = allMaps.find((x) => x.uuid === uuid);
+      if (!m) return;
 
-        // Group the callout names by region (A, B, Mid, ...)
-        const groups = {};
-        (m.callouts || []).forEach((c) => {
-          if (!groups[c.superRegionName]) groups[c.superRegionName] = new Set();
-          groups[c.superRegionName].add(c.regionName);
-        });
+      // Group the callout names by region (A, B, Mid, ...)
+      const groups = {};
+      (m.callouts || []).forEach((c) => {
+        if (!groups[c.superRegionName]) groups[c.superRegionName] = new Set();
+        groups[c.superRegionName].add(c.regionName);
+      });
 
-        const rank = (name) => {
-          const i = REGION_ORDER.indexOf(name);
-          return i === -1 ? 99 : i;
-        };
+      const rank = (name) => {
+        const i = REGION_ORDER.indexOf(name);
+        return i === -1 ? 99 : i;
+      };
 
-        const calloutHtml = Object.keys(groups)
-          .sort((a, b) => rank(a) - rank(b))
-          .map((region) => {
-            const chips = Array.from(groups[region])
-              .sort()
-              .map((name) => `<span class="chip">${esc(name)}</span>`)
-              .join("");
-            return `<div class="callout-title">${esc(region)}</div>${chips}`;
-          })
-          .join("");
+      const calloutHtml = Object.keys(groups)
+        .sort((a, b) => rank(a) - rank(b))
+        .map((region) => {
+          const chips = Array.from(groups[region])
+            .sort()
+            .map((name) => `<span class="chip">${esc(name)}</span>`)
+            .join("");
+          return `<div class="callout-title">${esc(region)}</div>${chips}`;
+        })
+        .join("");
 
-        const splash = m.splash
-          ? `<img class="map-splash mb-4" src="${m.splash}" alt="${esc(m.displayName)}" />`
-          : "";
+      const splash = m.splash
+        ? `<img class="map-splash mb-4" src="${m.splash}" alt="${esc(m.displayName)}" />`
+        : "";
 
-        const minimap = m.displayIcon
-          ? `<div class="col-12 col-md-5">
+      const minimap = m.displayIcon
+        ? `<div class="col-12 col-md-5">
                <div class="portrait-wrap">
                  <img class="portrait" src="${m.displayIcon}" alt="${esc(m.displayName)} minimap" />
                </div>
              </div>`
-          : "";
+        : "";
 
-        elMapModalTitle.textContent = m.displayName;
-        elMapModalBody.innerHTML = `${splash}
+      elMapModalTitle.textContent = m.displayName;
+      elMapModalBody.innerHTML = `${splash}
           <div class="row g-4">
             ${minimap}
             <div class="col-12 ${m.displayIcon ? "col-md-7" : ""}">
@@ -1005,5 +981,274 @@
             </div>
           </div>`;
 
-        mapModal.show();
+      mapModal.show();
+    }
+
+    let placed = [];
+    let nextTokenId = 1;
+    let selectedAgentUuid = null;
+    let selectedSlot = null; // null = place the agent itself, otherwise one of its abilities
+    let dragging = null;
+
+    const elPlannerMap = document.getElementById("plannerMap");
+    const elBoard = document.getElementById("plannerBoard");
+    const elBoardImg = document.getElementById("plannerMapImg");
+    const elTray = document.getElementById("plannerTray");
+    const elAbilities = document.getElementById("plannerAbilities");
+    const elPlannerHint = document.getElementById("plannerHint");
+
+    function currentSide() {
+      return document.querySelector('input[name="side"]:checked').value;
+    }
+
+    function updateHint() {
+      const agent = allAgents.find((a) => a.uuid === selectedAgentUuid);
+      if (!agent) {
+        elPlannerHint.textContent = "Pick an agent below, then click the map to place it.";
+        return;
       }
+
+      const ability = selectedSlot
+        ? (agent.abilities || []).find((ab) => ab.slot === selectedSlot)
+        : null;
+      const what = ability ? `${agent.displayName}'s ${ability.displayName}` : agent.displayName;
+      elPlannerHint.textContent = `Placing ${what} as ${currentSide()}. Click the map to place, drag to move, double-click to remove.`;
+    }
+
+    // Abilities of the selected agent (pick one, then click the map)
+    function renderAbilities() {
+      const agent = allAgents.find((a) => a.uuid === selectedAgentUuid);
+      if (!agent) {
+        elAbilities.innerHTML = "";
+        updateHint();
+        return;
+      }
+
+      const buttons = (agent.abilities || [])
+        .filter((ab) => ab.displayIcon && ab.slot !== "Passive")
+        .sort((a, b) => SLOT_ORDER.indexOf(a.slot) - SLOT_ORDER.indexOf(b.slot))
+        .map(
+          (ab) => `<button type="button" class="ability-btn ${selectedSlot === ab.slot ? "selected" : ""}" data-slot="${ab.slot}" title="${esc(ab.displayName)}">
+              <img src="${ab.displayIcon}" alt="${esc(ab.displayName)}" />
+              <span class="ability-key">${SLOT_KEY[ab.slot] || ""}</span>
+            </button>`
+        )
+        .join("");
+
+      // The first button places the agent itself
+      elAbilities.innerHTML = `<button type="button" class="ability-btn agent ${selectedSlot === null ? "selected" : ""}" data-slot="agent" title="${esc(agent.displayName)}">
+            <img src="${agent.displayIcon}" alt="${esc(agent.displayName)}" />
+          </button>${buttons}`;
+      updateHint();
+    }
+
+    // Map dropdown: standard maps that have a minimap
+    function fillPlannerMaps() {
+      const maps = allMaps.filter((m) => m.tacticalDescription && m.displayIcon);
+      elPlannerMap.innerHTML = maps
+        .map((m) => `<option value="${m.uuid}">${esc(m.displayName)}</option>`)
+        .join("");
+      setPlannerMap();
+    }
+
+    function setPlannerMap() {
+      const m = allMaps.find((x) => x.uuid === elPlannerMap.value);
+      if (m) {
+        elBoardImg.src = m.displayIcon;
+        elBoardImg.alt = m.displayName + " minimap";
+      } else {
+        elBoardImg.removeAttribute("src");
+      }
+      placed = []; // a new map starts empty
+      renderTokens();
+    }
+
+    // Agent tray at the bottom
+    function renderTray() {
+      elTray.innerHTML = allAgents
+        .map(
+          (a) => `<button type="button" class="tray-item" data-uuid="${a.uuid}" title="${esc(a.displayName)}">
+              <img src="${a.displayIcon}" alt="${esc(a.displayName)}" />
+            </button>`
+        )
+        .join("");
+      updateHint();
+    }
+
+    // Draw every placed agent on the board
+    function renderTokens() {
+      elBoard.querySelectorAll(".token").forEach((el) => el.remove());
+
+      placed.forEach((t) => {
+        const agent = allAgents.find((a) => a.uuid === t.uuid);
+        if (!agent) return;
+
+        // t.slot is set when this is an ability instead of the agent
+        const ability = t.slot
+          ? (agent.abilities || []).find((ab) => ab.slot === t.slot)
+          : null;
+        if (t.slot && !ability) return;
+
+        const name = ability ? ability.displayName : agent.displayName;
+        const icon = ability ? ability.displayIcon : agent.displayIcon;
+
+        const el = document.createElement("div");
+        el.className = "token " + t.side + (ability ? " ability" : "");
+        el.style.left = t.x + "%";
+        el.style.top = t.y + "%";
+        el.dataset.id = t.id;
+        el.title = (ability ? agent.displayName + ": " : "") + name + " (double-click to remove)";
+        el.innerHTML = `<img src="${icon}" alt="${esc(name)}" draggable="false" />`;
+        elBoard.appendChild(el);
+      });
+    }
+
+    // Pointer position as a % of the board
+    function boardPosition(e) {
+      const rect = elBoard.getBoundingClientRect();
+      const clamp = (v) => Math.min(100, Math.max(0, v));
+      return {
+        x: clamp(((e.clientX - rect.left) / rect.width) * 100),
+        y: clamp(((e.clientY - rect.top) / rect.height) * 100),
+      };
+    }
+
+    function removeToken(el) {
+      const id = Number(el.dataset.id);
+      const token = placed.find((p) => p.id === id);
+      // Ignore a double-click on empty ground that just placed a token
+      if (!token || Date.now() - token.born < 500) return;
+      placed = placed.filter((p) => p.id !== id);
+      renderTokens();
+    }
+
+    elPlannerMap.addEventListener("change", setPlannerMap);
+
+    document.querySelectorAll('input[name="side"]').forEach((radio) => {
+      radio.addEventListener("change", updateHint);
+    });
+
+    elTray.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-uuid]");
+      if (!btn) return;
+      selectedAgentUuid = btn.dataset.uuid;
+      selectedSlot = null;
+      elTray.querySelectorAll(".tray-item").forEach((b) => {
+        b.classList.toggle("selected", b.dataset.uuid === selectedAgentUuid);
+      });
+      renderAbilities();
+    });
+
+    elAbilities.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-slot]");
+      if (!btn) return;
+      selectedSlot = btn.dataset.slot === "agent" ? null : btn.dataset.slot;
+      renderAbilities();
+    });
+
+    // Click empty map = place the selected agent (or ability)
+    elBoard.addEventListener("click", (e) => {
+      if (e.target.closest(".token")) return;
+      if (!selectedAgentUuid || !elBoardImg.getAttribute("src")) return;
+
+      const pos = boardPosition(e);
+      placed.push({
+        id: nextTokenId++,
+        uuid: selectedAgentUuid,
+        slot: selectedSlot,
+        side: currentSide(),
+        x: pos.x,
+        y: pos.y,
+        born: Date.now(),
+      });
+      renderTokens();
+    });
+
+    // Drag a placed agent
+    elBoard.addEventListener("pointerdown", (e) => {
+      const el = e.target.closest(".token");
+      if (!el) return;
+      e.preventDefault();
+      el.setPointerCapture(e.pointerId);
+      dragging = { el: el, id: Number(el.dataset.id) };
+    });
+
+    elBoard.addEventListener("pointermove", (e) => {
+      if (!dragging) return;
+      const pos = boardPosition(e);
+      dragging.el.style.left = pos.x + "%";
+      dragging.el.style.top = pos.y + "%";
+      const token = placed.find((p) => p.id === dragging.id);
+      if (token) {
+        token.x = pos.x;
+        token.y = pos.y;
+      }
+    });
+
+    elBoard.addEventListener("pointerup", () => (dragging = null));
+    elBoard.addEventListener("pointercancel", () => (dragging = null));
+
+    // Double-click or right-click a placed agent = remove it
+    elBoard.addEventListener("dblclick", (e) => {
+      const el = e.target.closest(".token");
+      if (el) removeToken(el);
+    });
+
+    elBoard.addEventListener("contextmenu", (e) => {
+      const el = e.target.closest(".token");
+      if (!el) return;
+      e.preventDefault();
+      removeToken(el);
+    });
+
+    document.getElementById("plannerUndo").addEventListener("click", () => {
+      placed.pop();
+      renderTokens();
+    });
+
+    document.getElementById("plannerClear").addEventListener("click", () => {
+      placed = [];
+      renderTokens();
+    });
+
+    updateHint();
+
+    // ---------- Events ----------
+    elSearch.addEventListener("input", applySearch);
+
+    elPagination.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-page]");
+      if (!btn) return;
+      currentPage = Number(btn.dataset.page);
+      render();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    elList.addEventListener("click", (e) => {
+      const card = e.target.closest("[data-uuid]");
+      if (card) openAgent(card.dataset.uuid);
+    });
+
+    // Maps events
+    elMapsSearch.addEventListener("input", applyMapFilters);
+    elMapsFilter.addEventListener("change", applyMapFilters);
+
+    elMapsPagination.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-page]");
+      if (!btn) return;
+      mapPage = Number(btn.dataset.page);
+      renderMaps();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    elMapsList.addEventListener("click", (e) => {
+      const card = e.target.closest("[data-uuid]");
+      if (card) openMap(card.dataset.uuid);
+    });
+
+    loadAgents();
+    loadMaps();
+  </script>
+</body>
+
+</html>
