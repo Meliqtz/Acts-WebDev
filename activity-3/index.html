@@ -1,1 +1,426 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <title>Valorant Agents and Maps</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    <!-- Bootstrap CSS v5.3.8 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+
+    <style>
+      :root {
+        --bg: #0f1923;
+        --panel: #17222d;
+        --line: #26333f;
+        --red: #ff4655;
+        --text: #ece8e1;
+        --muted: #8b978f;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial,
+          sans-serif;
+      }
+
+      /* Top bar */
+      .topbar {
+        background: #0b121a;
+        border-bottom: 1px solid var(--line);
+        padding: 14px 0;
+      }
+      .brand {
+        color: var(--red);
+        font-weight: 800;
+        letter-spacing: 4px;
+      }
+      .brand small {
+        color: var(--text);
+        font-weight: 500;
+        letter-spacing: 2px;
+      }
+
+      /* Heading and search */
+      .page-title {
+        font-size: 2rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin: 0;
+      }
+      .count {
+        color: var(--muted);
+        margin: 4px 0 0;
+        min-height: 1.5em;
+      }
+      .search-input {
+        background-color: var(--panel);
+        border: 1px solid var(--line);
+        color: var(--text);
+        border-radius: 0;
+        padding: 10px 14px;
+      }
+      .search-input:focus {
+        background-color: var(--panel);
+        color: var(--text);
+        border-color: var(--red);
+        box-shadow: none;
+      }
+
+      /* Agent cards (listing) */
+      .agent-card {
+        display: block;
+        width: 100%;
+        padding: 0;
+        text-align: left;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        color: inherit;
+        overflow: hidden;
+        transition: transform 0.2s ease, border-color 0.2s ease;
+      }
+      .agent-card:hover {
+        transform: translateY(-4px);
+        border-color: var(--red);
+      }
+      .agent-img {
+        aspect-ratio: 1 / 1;
+        background: var(--panel);
+      }
+      .agent-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+      .agent-info {
+        padding: 12px 14px;
+        border-top: 3px solid var(--red);
+      }
+      .agent-name {
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .agent-role {
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+
+      /* Section tabs */
+      .section-tabs {
+        border-bottom: 1px solid var(--line);
+        margin-bottom: 24px;
+      }
+      .section-tabs .nav-link {
+        background: none;
+        border: 0;
+        border-bottom: 3px solid transparent;
+        border-radius: 0;
+        color: var(--muted);
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+      .section-tabs .nav-link:hover {
+        color: var(--text);
+      }
+      .section-tabs .nav-link.active {
+        background: none;
+        border-bottom-color: var(--red);
+        color: var(--text);
+      }
+
+      /* Maps */
+      .map-img {
+        aspect-ratio: 16 / 9;
+        background: var(--panel);
+      }
+      .map-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .map-splash {
+        display: block;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+      }
+      .callout-title {
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin: 12px 0 6px;
+      }
+      .chip {
+        display: inline-block;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        padding: 2px 10px;
+        margin: 0 6px 6px 0;
+        font-size: 0.85rem;
+      }
+
+      /* Planner */
+      .planner-board {
+        position: relative;
+        width: 100%;
+        max-width: 720px;
+        aspect-ratio: 1 / 1;
+        margin: 0 auto;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        overflow: hidden;
+        cursor: crosshair;
+        user-select: none;
+        touch-action: manipulation;
+      }
+      .planner-board > img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        pointer-events: none;
+      }
+      .token {
+        position: absolute;
+        width: 44px;
+        height: 44px;
+        transform: translate(-50%, -50%);
+        border: 3px solid;
+        border-radius: 50%;
+        background: var(--panel);
+        overflow: hidden;
+        cursor: grab;
+        touch-action: none;
+      }
+      .token:active {
+        cursor: grabbing;
+      }
+      .token.ally {
+        border-color: #0dcaf0;
+      }
+      .token.enemy {
+        border-color: var(--red);
+      }
+      .token img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        pointer-events: none;
+      }
+      .tray {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        padding: 12px 0;
+        margin-top: 16px;
+      }
+      .tray-item {
+        flex: 0 0 auto;
+        width: 64px;
+        height: 64px;
+        padding: 0;
+        background: var(--panel);
+        border: 2px solid var(--line);
+      }
+      .tray-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .tray-item:hover {
+        border-color: var(--text);
+      }
+      .tray-item.selected {
+        border-color: var(--red);
+      }
+
+      .token.ability {
+        width: 38px;
+        height: 38px;
+        padding: 4px;
+        border-radius: 8px;
+      }
+      .token.ability img {
+        object-fit: contain;
+      }
+      .ability-bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 16px;
+      }
+      .ability-btn {
+        position: relative;
+        width: 52px;
+        height: 52px;
+        padding: 6px;
+        background: var(--panel);
+        border: 2px solid var(--line);
+      }
+      .ability-btn img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+      .ability-btn.agent {
+        padding: 0;
+      }
+      .ability-btn.agent img {
+        object-fit: cover;
+      }
+      .ability-btn:hover {
+        border-color: var(--text);
+      }
+      .ability-btn.selected {
+        border-color: var(--red);
+      }
+      .ability-key {
+        position: absolute;
+        right: -2px;
+        bottom: -2px;
+        padding: 0 4px;
+        background: var(--red);
+        color: #fff;
+        font-size: 0.65rem;
+        font-weight: 700;
+        line-height: 1.3;
+      }
+
+      /* Messages */
+      .empty {
+        text-align: center;
+        color: var(--muted);
+        padding: 48px 0;
+      }
+
+      /* Pagination */
+      .pagination .page-link {
+        background: var(--panel);
+        border-color: var(--line);
+        color: var(--text);
+        border-radius: 0;
+      }
+      .pagination .page-link:hover {
+        border-color: var(--red);
+      }
+      .pagination .page-item.active .page-link {
+        background: var(--red);
+        border-color: var(--red);
+        color: #fff;
+      }
+      .pagination .page-item.disabled .page-link {
+        opacity: 0.4;
+      }
+
+      /* Modal (view) */
+      .modal-content {
+        background: var(--bg);
+        border: 1px solid var(--line);
+        border-radius: 0;
+      }
+      .modal-header,
+      .modal-footer {
+        border-color: var(--line);
+      }
+      .modal-title {
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+      .portrait-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        background: var(--panel);
+      }
+      .portrait {
+        max-width: 100%;
+        max-height: 420px;
+        object-fit: contain;
+      }
+      .role-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        padding: 4px 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .role-badge img {
+        width: 20px;
+        height: 20px;
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .section-label {
+        color: var(--red);
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin: 20px 0 8px;
+      }
+      .ability-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .ability {
+        display: flex;
+        gap: 12px;
+        padding: 10px 0;
+        border-top: 1px solid var(--line);
+      }
+      .ability-icon {
+        width: 40px;
+        height: 40px;
+        flex-shrink: 0;
+        object-fit: contain;
+        background: var(--panel);
+        padding: 4px;
+      }
+      .ability-name {
+        font-weight: 600;
+      }
+      .ability-key {
+        display: inline-block;
+        min-width: 22px;
+        padding: 0 6px;
+        margin-right: 6px;
+        background: var(--red);
+        color: #fff;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-align: center;
+      }
+      .ability-desc {
+        color: var(--muted);
+        font-size: 0.85rem;
+        white-space: pre-line;
+      }
+
+      footer {
+        color: var(--muted);
+        font-size: 0.8rem;
+        text-align: center;
+        padding: 32px 0;
+      }
+    </style>
+  </head>
