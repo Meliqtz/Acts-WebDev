@@ -848,5 +848,162 @@
 
         agentModal.show();
       }
+ const MAPS_URL = "https://valorant-api.com/v1/maps";
+      const MAP_PAGE_SIZE = 6;
+      const REGION_ORDER = ["A", "B", "C", "Mid", "Attacker Side", "Defender Side"];
 
-      
+      let allMaps = [];
+      let mapsFiltered = [];
+      let mapPage = 1;
+
+      const elMapsList = document.getElementById("maps-list");
+      const elMapsStatus = document.getElementById("mapsStatus");
+      const elMapsCount = document.getElementById("mapsCount");
+      const elMapsSearch = document.getElementById("mapsSearch");
+      const elMapsFilter = document.getElementById("mapsFilter");
+      const elMapsPagination = document.getElementById("mapsPagination");
+      const elMapModalTitle = document.getElementById("mapModalTitle");
+      const elMapModalBody = document.getElementById("mapModalBody");
+      const mapModal = new bootstrap.Modal(document.getElementById("mapModal"));
+
+      async function loadMaps() {
+        elMapsList.innerHTML = "";
+        elMapsPagination.innerHTML = "";
+        elMapsCount.textContent = "";
+        elMapsStatus.innerHTML = `<div class="empty">
+            <div class="spinner-border text-danger" role="status"></div>
+            <div class="mt-3">Loading maps...</div>
+          </div>`;
+
+        try {
+          const res = await fetch(MAPS_URL);
+          if (!res.ok) throw new Error("Request failed (" + res.status + ")");
+          const json = await res.json();
+
+          // The API lists "The Range" twice, so keep one of each name
+          const seen = new Set();
+          allMaps = json.data
+            .filter((m) => {
+              if (seen.has(m.displayName)) return false;
+              seen.add(m.displayName);
+              return true;
+            })
+            .sort((a, b) => a.displayName.localeCompare(b.displayName));
+
+          elMapsStatus.innerHTML = "";
+          applyMapFilters();
+          fillPlannerMaps();
+        } catch (err) {
+          elMapsStatus.innerHTML = `<div class="alert alert-danger d-flex justify-content-between align-items-center">
+              <span>Could not load maps. ${esc(err.message)}</span>
+              <button type="button" class="btn btn-sm btn-danger" id="retryMaps">Try again</button>
+            </div>`;
+          document.getElementById("retryMaps").addEventListener("click", loadMaps);
+        }
+      }
+
+      // Search + "Standard maps" filter (standard = maps with A/B sites)
+      function applyMapFilters() {
+        const query = elMapsSearch.value.trim().toLowerCase();
+        const standardOnly = elMapsFilter.value === "standard";
+
+        mapsFiltered = allMaps.filter((m) => {
+          if (standardOnly && !m.tacticalDescription) return false;
+          return m.displayName.toLowerCase().includes(query);
+        });
+
+        mapPage = 1;
+        renderMaps();
+      }
+
+      function renderMaps() {
+        const total = mapsFiltered.length;
+        const pages = Math.max(1, Math.ceil(total / MAP_PAGE_SIZE));
+        if (mapPage > pages) mapPage = pages;
+
+        if (total === 0) {
+          elMapsList.innerHTML = "";
+          elMapsPagination.innerHTML = "";
+          elMapsCount.textContent = "0 maps";
+          elMapsStatus.innerHTML = `<p class="empty">No maps match "${esc(elMapsSearch.value.trim())}".</p>`;
+          return;
+        }
+
+        const start = (mapPage - 1) * MAP_PAGE_SIZE;
+        const pageItems = mapsFiltered.slice(start, start + MAP_PAGE_SIZE);
+
+        elMapsStatus.innerHTML = "";
+        elMapsCount.textContent = `Showing ${start + 1}-${start + pageItems.length} of ${total} maps`;
+        elMapsList.innerHTML = pageItems.map(mapCardHtml).join("");
+        elMapsPagination.innerHTML = paginationHtml(mapPage, pages);
+      }
+
+      function mapCardHtml(m) {
+        const image = m.splash
+          ? `<img src="${m.splash}" alt="${esc(m.displayName)}" loading="lazy" />`
+          : "";
+
+        return `<div class="col-12 col-sm-6 col-lg-4">
+          <button type="button" class="agent-card" data-uuid="${m.uuid}">
+            <div class="map-img">${image}</div>
+            <div class="agent-info">
+              <div class="agent-name">${esc(m.displayName)}</div>
+              <div class="agent-role">${esc(m.tacticalDescription || "Other game mode")}</div>
+            </div>
+          </button>
+        </div>`;
+      }
+
+      function openMap(uuid) {
+        const m = allMaps.find((x) => x.uuid === uuid);
+        if (!m) return;
+
+        // Group the callout names by region (A, B, Mid, ...)
+        const groups = {};
+        (m.callouts || []).forEach((c) => {
+          if (!groups[c.superRegionName]) groups[c.superRegionName] = new Set();
+          groups[c.superRegionName].add(c.regionName);
+        });
+
+        const rank = (name) => {
+          const i = REGION_ORDER.indexOf(name);
+          return i === -1 ? 99 : i;
+        };
+
+        const calloutHtml = Object.keys(groups)
+          .sort((a, b) => rank(a) - rank(b))
+          .map((region) => {
+            const chips = Array.from(groups[region])
+              .sort()
+              .map((name) => `<span class="chip">${esc(name)}</span>`)
+              .join("");
+            return `<div class="callout-title">${esc(region)}</div>${chips}`;
+          })
+          .join("");
+
+        const splash = m.splash
+          ? `<img class="map-splash mb-4" src="${m.splash}" alt="${esc(m.displayName)}" />`
+          : "";
+
+        const minimap = m.displayIcon
+          ? `<div class="col-12 col-md-5">
+               <div class="portrait-wrap">
+                 <img class="portrait" src="${m.displayIcon}" alt="${esc(m.displayName)} minimap" />
+               </div>
+             </div>`
+          : "";
+
+        elMapModalTitle.textContent = m.displayName;
+        elMapModalBody.innerHTML = `${splash}
+          <div class="row g-4">
+            ${minimap}
+            <div class="col-12 ${m.displayIcon ? "col-md-7" : ""}">
+              <div class="section-label mt-0">Details</div>
+              <p class="mb-1"><span class="muted">Sites:</span> ${esc(m.tacticalDescription || "Other game mode")}</p>
+              ${m.coordinates ? `<p class="mb-1"><span class="muted">Coordinates:</span> ${esc(m.coordinates)}</p>` : ""}
+              ${calloutHtml ? `<div class="section-label">Callouts</div>${calloutHtml}` : ""}
+            </div>
+          </div>`;
+
+        mapModal.show();
+      }
